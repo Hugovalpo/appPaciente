@@ -6,17 +6,27 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Linking } from "react-native";
 import { encode } from "base-64";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPhoneFlip } from "@fortawesome/free-solid-svg-icons";
 import CheckBox from "@react-native-community/checkbox";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function LoginScreen({ navigation }) {
+  // state for checkbox
   const [checkBoxValue, setCheckBoxValue] = useState(false);
   const [buttonEnabled, setButtonEnabled] = useState(true);
   const [rut, setRut] = useState(null);
+
+  const isFocused = useIsFocused(); // for refreshing useEffect if screen is showed
+
+  useEffect(() => {
+    setRut(null);
+  }, [isFocused]);
+
+  console.log("estado de rut", rut);
 
   //// function for token /////////
   const getToken = () => {
@@ -47,36 +57,36 @@ export default function LoginScreen({ navigation }) {
     const rut_regex = /^[0-9-]+$/;
 
     if (rut_regex.test(rut)) {
-    getToken()
-      .then((token) => {
-        const urlData =
-          "https://fhir-server.igamalab.cl/fhir/Patient?identifier=" + rut;
-        return fetch(urlData, {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
+      getToken()
+        .then((token) => {
+          const urlData =
+            "https://fhir-server.igamalab.cl/fhir/Patient?identifier=" + rut;
+          return fetch(urlData, {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          });
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.total > 0) {
+            navigation.navigate("Home");
+            console.log("data ready", data.total);
+          } else {
+            console.log("data ready", data.total);
+            console.log(" rut not exist");
+            alert("Rut no encontrado");
+          }
+        })
+        .catch((error) => {
+          console.error("Error in GET query:", error);
+          alert("Problema en el servidor");
         });
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.total > 0) {
-          navigation.navigate("Home");
-          console.log("data ready", data.total);
-        } else {
-          console.log("data ready", data.total);
-          console.log(" rut not exist");
-          alert("Rut no encontrado");
-        }
-      })
-      .catch((error) => {
-        console.error("Error in GET query:", error);
-        alert("Problema en el servidor");
-      });
-     } else {
+    } else {
       console.log("Rut no valid in regex.");
-      alert('Rut invalido');
-     }
+      alert("Rut invalido");
+    }
   };
 
   const handleOpenTerms = async () => {
@@ -111,7 +121,7 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity
           style={styles.button}
           title="Go to Home"
-          disabled={!buttonEnabled} 
+          disabled={!buttonEnabled}
           onPress={handleQuery}
         >
           <Text style={styles.buttonText}>INGRESAR</Text>
@@ -121,7 +131,7 @@ export default function LoginScreen({ navigation }) {
         value={checkBoxValue}
         onValueChange={(newValue) => setCheckBoxValue(newValue)}
       /> */}
-       <Text>Aceptas los </Text>
+      <Text>Aceptas los </Text>
       <TouchableOpacity style={styles.termsCondition} onPress={handleOpenTerms}>
         <Text style={styles.linkText}>terminos y condiciones de uso</Text>
       </TouchableOpacity>
@@ -176,8 +186,10 @@ const styles = StyleSheet.create({
     width: 240,
     height: 37,
     fontSize: 16,
-    color: "black",
-    textAlign: "center",
+    paddingLeft: 10,
+    alignItems: "center",
+    //color: "black",
+    //textAlign: "center",
   },
   button: {
     marginTop: 10,
