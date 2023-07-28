@@ -9,14 +9,23 @@ import {
 import ButtonsHome from "../components/ButtonsHome";
 import HeaderHome from "../components/HeaderHome";
 import Networks from "../components/Networks";
+import { useState, useEffect, useContext } from "react";
+import { MyDataContext } from "../context/MyDatacontext";
 
 import { useNavigation } from "@react-navigation/native";
 
-export default function Homescreen({ route }) {
-  // variable for useNavigation
-  const navigation = useNavigation();
+export default function Homescreen() {
+  const { data } = useContext(MyDataContext);
 
-  const { data } = route.params;
+  //const [dataShow, setDataShow] = useState(null);
+
+  //const { data } = route.params;
+
+  // useEffect((data) => {
+  //     setDataShow(data);
+  // }, [data]);
+
+  const navigation = useNavigation();
 
   const lastname = data.entry[0].resource.name[0].family;
   const name = data.entry[0].resource.name[0].given[0];
@@ -48,7 +57,9 @@ export default function Homescreen({ route }) {
           </Text>
           <View style={styles.containerMyData}>
             <Text style={styles.NameData}>Ir a</Text>
-            <TouchableOpacity onPress={() => navigation.navigate("MisDatos")}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("MisDatos")}
+            >
               <Text style={styles.buttonText}>Mis Datos</Text>
             </TouchableOpacity>
           </View>

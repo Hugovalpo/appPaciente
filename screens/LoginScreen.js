@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Linking } from "react-native";
 import { encode } from "base-64";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -14,8 +14,11 @@ import { faPhoneFlip } from "@fortawesome/free-solid-svg-icons";
 import CheckBox from "@react-native-community/checkbox";
 import { useIsFocused } from "@react-navigation/native";
 import Networks from "../components/Networks";
+import { MyDataContext } from "../context/MyDatacontext";
 
 export default function LoginScreen({ navigation }) {
+  const { setData } = useContext(MyDataContext);
+
   // state for checkbox
   const [checkBoxValue, setCheckBoxValue] = useState(false);
   const [buttonEnabled, setButtonEnabled] = useState(true);
@@ -72,6 +75,7 @@ export default function LoginScreen({ navigation }) {
         .then((response) => response.json())
         .then((data) => {
           if (data.total > 0) {
+            setData(data);
             navigation.navigate("Home", { data });
             console.log("data ready", data.total);
             console.log("data apellido", data.entry[0].resource.name[0].family);
