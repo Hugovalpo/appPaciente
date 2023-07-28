@@ -8,8 +8,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ButtonsHome from "../components/ButtonsHome";
 import HeaderHome from "../components/HeaderHome";
+import Networks from "../components/Networks";
+
+import { useNavigation } from "@react-navigation/native";
 
 export default function Homescreen() {
+  // variable for useNavigation
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -31,15 +37,21 @@ export default function Homescreen() {
       {/* Body */}
       <View style={styles.buttonData}>
         <FontAwesomeIcon icon={faPerson} size={40} />
-        <Text style={styles.NameData}>Juan Perez</Text>
-        <View style={styles.ContainerMyData}>
-          <Text style={styles.NameData}>Ir a</Text>
-          <TouchableOpacity>
-            <Text style={styles.buttonText}>Mis Datos</Text>
-          </TouchableOpacity>
+        <View style={styles.containerText}>
+          <Text style={styles.NameData}>Juan Perez</Text>
+          <View style={styles.containerMyData}>
+            <Text style={styles.NameData}>Ir a</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("MisDatos")}>
+              <Text style={styles.buttonText}>Mis Datos</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
+
       <ButtonsHome />
+      <View style={styles.networks}>
+        <Networks />
+      </View>
     </View>
   );
 }
@@ -49,8 +61,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  ContainerMyData: {
+  containerMyData: {
     flexDirection: "row",
+  },
+  containerText: {},
+  NameData: {
+    fontSize: 25,
   },
   contactContainer: {
     flexDirection: "row",
@@ -88,15 +104,20 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonText: {
-    fontSize: 16,
+    marginLeft: 10,
+    fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
   },
   buttonData: {
+    flexDirection: "row",
     height: 95,
-    justifyContent: "center",
+    justifyContent: "start",
     alignItems: "center",
     backgroundColor: "#E6E6E6",
     marginBottom: 20,
+  },
+  networks: {
+    alignItems: "center",
   },
 });

@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPhoneFlip } from "@fortawesome/free-solid-svg-icons";
 import CheckBox from "@react-native-community/checkbox";
 import { useIsFocused } from "@react-navigation/native";
+import Networks from "../components/Networks";
 
 export default function LoginScreen({ navigation }) {
   // state for checkbox
@@ -142,6 +143,7 @@ export default function LoginScreen({ navigation }) {
           <Text>+562 26121600 - +562 28693300 </Text>
         </View>
       </View>
+      <Networks/>
     </View>
   );
 }
