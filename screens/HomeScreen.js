@@ -12,9 +12,14 @@ import Networks from "../components/Networks";
 
 import { useNavigation } from "@react-navigation/native";
 
-export default function Homescreen() {
+export default function Homescreen({ route }) {
   // variable for useNavigation
   const navigation = useNavigation();
+
+  const { data } = route.params;
+
+  const lastname = data.entry[0].resource.name[0].family;
+  const name = data.entry[0].resource.name[0].given[0];
 
   return (
     <View style={styles.container}>
@@ -36,9 +41,11 @@ export default function Homescreen() {
       </View>
       {/* Body */}
       <View style={styles.buttonData}>
-        <FontAwesomeIcon icon={faPerson} size={40} />
+        <FontAwesomeIcon icon={faPerson} size={60} />
         <View style={styles.containerText}>
-          <Text style={styles.NameData}>Juan Perez</Text>
+          <Text style={styles.NameData}>
+            {name ? name : "Juan"} {lastname ? lastname : "Perez"}
+          </Text>
           <View style={styles.containerMyData}>
             <Text style={styles.NameData}>Ir a</Text>
             <TouchableOpacity onPress={() => navigation.navigate("MisDatos")}>

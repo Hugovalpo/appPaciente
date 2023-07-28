@@ -72,8 +72,10 @@ export default function LoginScreen({ navigation }) {
         .then((response) => response.json())
         .then((data) => {
           if (data.total > 0) {
-            navigation.navigate("Home");
+            navigation.navigate("Home", { data });
             console.log("data ready", data.total);
+            console.log("data apellido", data.entry[0].resource.name[0].family);
+            console.log("data name", data.entry[0].resource.name[0].given[0]);
           } else {
             console.log("data ready", data.total);
             console.log(" rut not exist");
@@ -143,7 +145,7 @@ export default function LoginScreen({ navigation }) {
           <Text>+562 26121600 - +562 28693300 </Text>
         </View>
       </View>
-      <Networks/>
+      <Networks />
     </View>
   );
 }

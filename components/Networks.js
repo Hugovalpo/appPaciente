@@ -17,22 +17,26 @@ export default function Networks() {
 
     switch (buttonType) {
       case "instagram":
-        url = "https://www.instagram.com";
+        url = "https://www.instagram.com/hospitaldra.eloisadiaz/";
         break;
       case "whatsapp":
-        url = "https://www.ejemplo.com/enlace2";
+        url =
+          "https://api.whatsapp.com/send/?phone=56226121600&text&type=phone_number&app_absent=0";
         break;
       case "facebook":
-        url = "https://www.facebook.com";
+        url = "https://www.facebook.com/Hospital.Dra.EloisaDiaz/";
         break;
       case "twitter":
-        url = "https://www.twitter.com";
+        url =
+          "https://twitter.com/i/flow/login?redirect_after_login=%2FHosp_EloisaDiaz";
         break;
       case "linkedin":
-        url = "https://www.linkedin.com";
+        url =
+          "https://www.linkedin.com/company/hospital-eloisadiaz/?viewAsMember=true";
         break;
       case "youtube":
-        url = "https://www.youtube.com";
+        url =
+          "https://www.youtube.com/channel/UCkuRLzb2Tfru2uH7lFqLJLg/featured";
         break;
       default:
         alert("No se puede abrir la url");
