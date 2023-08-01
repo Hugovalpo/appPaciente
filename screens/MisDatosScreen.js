@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Button,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import HeaderPage from "../components/HeaderPage";
 import React, { useEffect, useState, useContext } from "react";
@@ -25,10 +26,41 @@ export default function MisDatosScreen() {
   const [direccion, setDireccion] = useState("");
 
   useEffect(() => {
+     
+    const NumGenre = data.entry[0].resource.extension[1].valueCode;
+    switch (NumGenre) {
+          case 1 :
+             setGenero('Masculino');
+             break;
+          case 2 :
+             setGenero('Femenino');
+             break ;
+          case 4 : 
+          setGenero('Transgenero masculino');
+            break;
+          case 5 :
+            setGenero('Transgenero femenina');
+            break;
+          case 6 : 
+            setGenero ('No binarie');
+            break;
+          case 7:
+            setGenero ('Otra');
+            break;
+          case 8 : 
+              setGenero('No revelado');
+              break;
+          default:
+              setGenero('');
+    }
+     
+
     setNombres(data.entry[0].resource.name[0].given[0]);
     setApellidos(data.entry[0].resource.name[0].family);
     setNombreSocial(data.entry[0].resource.name[0].given[0]);
-    setRut();
+    setRut(data.entry[0].resource.identifier[0].value);
+    //setGenero(data.entry[0].resource.extension[1].valueCode);
+    setCesfam(data.entry[0].resource.extension)
   }, []);
 
   // const lastname = data.entry[0].resource.name[0].family;
@@ -107,9 +139,9 @@ export default function MisDatosScreen() {
           onChangeText={setDireccion}
           placeholder="Ingrese su dirección"
         />
-        <View style={styles.buttonView}>
-          <Button title="Enviar" onPress={handleSubmit} />
-        </View>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text title="Actualizar datos"  />
+        </TouchableOpacity>
       </ScrollView>
     </>
   );
@@ -131,7 +163,12 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
-  buttonView: {
+  button: {
+    marginTop: 10,
+    backgroundColor: "#CFA12B",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
     marginBottom: 30,
   },
 });
