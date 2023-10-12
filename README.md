@@ -20,18 +20,9 @@ Back:
 
 ## Goals
 
-Frontend:
++ User-friendly and responsive app
++ CRUD operations with Server FHIR HL7
 
-+ States
-+ Hooks
-+ Redux store and persist
-+ Components
-+ Props
-+ Popus
-
-Backend:
-
-+ BD in MongoDB
 
 ## Launch
 
